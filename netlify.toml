@@ -1,0 +1,21 @@
+# Netlify Configuration for Influencerium
+
+[build]
+  publish = "."
+  command = "echo 'No build required for static site'"
+
+[[redirects]]
+  from = "/*"
+  to = "/influencerium_index.html"
+  status = 200
+
+# Cache settings
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Cache-Control = "public, max-age=3600"
+
+[[headers]]
+  for = "/*.html"
+  [headers.values]
+    Cache-Control = "public, max-age=1800"
