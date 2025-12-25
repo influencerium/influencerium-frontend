@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analytics - Influencerium</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-purple: #7C3AED;
+            --accent-pink: #EC4899;
+            --dark-bg: #0F172A;
+            --light-bg: #F8FAFC;
+            --white: #FFFFFF;
+            --text-dark: #1E293B;
+            --text-light: #64748B;
+            --border: #E2E8F0;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--light-bg);
+            color: var(--text-dark);
+        }
+
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 280px;
+            height: 100vh;
+            background: var(--white);
+            border-right: 1px solid var(--border);
+            padding: 2rem 1.5rem;
+            overflow-y: auto;
+            z-index: 1000;
+        }
+
+        .sidebar-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 2rem;
+            font-size: 1.3rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary-purple), var(--accent-pink));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .sidebar-logo-icon {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, var(--primary-purple), var(--accent-pink));
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-weight: bold;
+        }
+
+        .sidebar-nav {
+            list-style: none;
+        }
+
+        .sidebar-nav li {
+            margin-bottom: 0.5rem;
+        }
+
+        .sidebar-nav a {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1rem;
+            color: var(--text-light);
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+
+        .sidebar-nav a:hover,
+        .sidebar-nav a.active {
+            background: var(--light-bg);
+            color: var(--primary-purple);
+        }
+
+        .main-content {
+            margin-left: 280px;
+            padding: 2rem;
+        }
+
+        .header {
+            margin-bottom: 2rem;
+        }
+
+        .header h1 {
+            font-size: 1.8rem;
+            color: var(--text-dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .header p {
+            color: var(--text-light);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: var(--white);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+        }
+
+        .stat-label {
+            color: var(--text-light);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-change {
+            font-size: 0.85rem;
+            color: #10B981;
+            font-weight: 600;
+        }
+
+        .chart-section {
+            background: var(--white);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            margin-bottom: 2rem;
+        }
+
+        .chart-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 1rem;
+        }
+
+        .chart-placeholder {
+            width: 100%;
+            height: 300px;
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.05), rgba(236, 72, 153, 0.05));
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+                border-right: none;
+                border-bottom: 1px solid var(--border);
+                padding: 1rem;
+            }
+
+            .main-content {
+                margin-left: 0;
+                padding: 1rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .grid-2 {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-logo">
+            <div class="sidebar-logo-icon">⬆</div>
+            Influencerium
+        </div>
+        <nav class="sidebar-nav">
+            <li><a href="influencerium_brand_dashboard.html">📊 Dashboard</a></li>
+            <li><a href="influencerium_brand_profile.html">🏢 Profile</a></li>
+            <li><a href="influencerium_brand_campaigns.html">🎯 Campaigns</a></li>
+            <li><a href="influencerium_brand_creators.html">👥 Creators</a></li>
+            <li><a href="influencerium_brand_submissions.html">📹 Submissions</a></li>
+            <li><a href="#" class="active">📈 Analytics</a></li>
+            <li><a href="influencerium_brand_settings.html">⚙️ Settings</a></li>
+            <li><a href="influencerium_index.html">🏠 Home</a></li>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Header -->
+        <div class="header">
+            <h1>Analytics</h1>
+            <p>Track your campaign performance and ROI</p>
+        </div>
+
+        <!-- Key Metrics -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-label">Total Reach</div>
+                <div class="stat-value">2.8M</div>
+                <div class="stat-change">↑ 12% from last month</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Total Engagement</div>
+                <div class="stat-value">134K</div>
+                <div class="stat-change">↑ 8% from last month</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Average ROI</div>
+                <div class="stat-value">4.2x</div>
+                <div class="stat-change">↑ 15% from last month</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Total Spent</div>
+                <div class="stat-value">$45K</div>
+                <div class="stat-change">↑ 20% from last month</div>
+            </div>
+        </div>
+
+        <!-- Reach Trend -->
+        <div class="chart-section">
+            <div class="chart-title">Reach Trend</div>
+            <div class="chart-placeholder">📈 Chart: Total reach over time</div>
+        </div>
+
+        <!-- Two Column Charts -->
+        <div class="grid-2">
+            <div class="chart-section">
+                <div class="chart-title">Engagement by Campaign</div>
+                <div class="chart-placeholder">📊 Chart: Engagement breakdown</div>
+            </div>
+            <div class="chart-section">
+                <div class="chart-title">ROI Performance</div>
+                <div class="chart-placeholder">📈 Chart: ROI by campaign</div>
+            </div>
+        </div>
+
+        <!-- Cost Analysis -->
+        <div class="grid-2">
+            <div class="chart-section">
+                <div class="chart-title">Cost Per View</div>
+                <div class="chart-placeholder">💰 Chart: CPV trends</div>
+            </div>
+            <div class="chart-section">
+                <div class="chart-title">Budget Allocation</div>
+                <div class="chart-placeholder">📊 Chart: Budget by campaign type</div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

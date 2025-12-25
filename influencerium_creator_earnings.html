@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Earnings - Influencerium</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-purple: #7C3AED;
+            --accent-pink: #EC4899;
+            --dark-bg: #0F172A;
+            --light-bg: #F8FAFC;
+            --white: #FFFFFF;
+            --text-dark: #1E293B;
+            --text-light: #64748B;
+            --border: #E2E8F0;
+            --success: #10B981;
+            --warning: #F59E0B;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--light-bg);
+            color: var(--text-dark);
+        }
+
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 280px;
+            height: 100vh;
+            background: var(--white);
+            border-right: 1px solid var(--border);
+            padding: 2rem 1.5rem;
+            overflow-y: auto;
+            z-index: 1000;
+        }
+
+        .sidebar-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 2rem;
+            font-size: 1.3rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary-purple), var(--accent-pink));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .sidebar-logo-icon {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, var(--primary-purple), var(--accent-pink));
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-weight: bold;
+        }
+
+        .sidebar-nav {
+            list-style: none;
+        }
+
+        .sidebar-nav li {
+            margin-bottom: 0.5rem;
+        }
+
+        .sidebar-nav a {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1rem;
+            color: var(--text-light);
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+
+        .sidebar-nav a:hover,
+        .sidebar-nav a.active {
+            background: var(--light-bg);
+            color: var(--primary-purple);
+        }
+
+        .main-content {
+            margin-left: 280px;
+            padding: 2rem;
+        }
+
+        .header {
+            margin-bottom: 2rem;
+            background: var(--white);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+        }
+
+        .header h1 {
+            font-size: 1.8rem;
+            color: var(--text-dark);
+            margin-bottom: 1rem;
+        }
+
+        .earnings-summary {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .earnings-card {
+            background: linear-gradient(135deg, var(--light-bg), var(--white));
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+        }
+
+        .earnings-label {
+            color: var(--text-light);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .earnings-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .earnings-change {
+            font-size: 0.85rem;
+            color: var(--success);
+            font-weight: 600;
+        }
+
+        .earnings-change.negative {
+            color: var(--warning);
+        }
+
+        .chart-section {
+            background: var(--white);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            margin-bottom: 2rem;
+        }
+
+        .chart-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 1rem;
+        }
+
+        .chart-placeholder {
+            width: 100%;
+            height: 300px;
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.05), rgba(236, 72, 153, 0.05));
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        .earnings-table {
+            background: var(--white);
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            overflow: hidden;
+        }
+
+        .table-header {
+            background: var(--light-bg);
+            padding: 1rem;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 1rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .table-row {
+            padding: 1rem;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 1rem;
+            border-bottom: 1px solid var(--border);
+            align-items: center;
+        }
+
+        .table-row:last-child {
+            border-bottom: none;
+        }
+
+        .table-row:hover {
+            background: var(--light-bg);
+        }
+
+        .campaign-name {
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .campaign-brand {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        .amount {
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .status-completed {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--success);
+        }
+
+        .status-pending {
+            background: rgba(245, 158, 11, 0.1);
+            color: var(--warning);
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.95rem;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-purple), var(--accent-pink));
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(124, 58, 237, 0.4);
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+                border-right: none;
+                border-bottom: 1px solid var(--border);
+                padding: 1rem;
+            }
+
+            .main-content {
+                margin-left: 0;
+                padding: 1rem;
+            }
+
+            .earnings-summary {
+                grid-template-columns: 1fr;
+            }
+
+            .table-header,
+            .table-row {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-logo">
+            <div class="sidebar-logo-icon">⬆</div>
+            Influencerium
+        </div>
+        <nav class="sidebar-nav">
+            <li><a href="influencerium_creator_dashboard.html">📊 Dashboard</a></li>
+            <li><a href="influencerium_creator_profile.html">👤 Profile</a></li>
+            <li><a href="influencerium_creator_submissions.html">📹 Submissions</a></li>
+            <li><a href="#" class="active">💰 Earnings</a></li>
+            <li><a href="influencerium_creator_campaigns.html">🎯 Campaigns</a></li>
+            <li><a href="influencerium_creator_settings.html">⚙️ Settings</a></li>
+            <li><a href="influencerium_index.html">🏠 Home</a></li>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Header -->
+        <div class="header">
+            <h1>Earnings</h1>
+            <div class="earnings-summary">
+                <div class="earnings-card">
+                    <div class="earnings-label">Total Earnings</div>
+                    <div class="earnings-value">$12,500</div>
+                    <div class="earnings-change">↑ 15% from last month</div>
+                </div>
+                <div class="earnings-card">
+                    <div class="earnings-label">This Month</div>
+                    <div class="earnings-value">$2,100</div>
+                    <div class="earnings-change">↑ 8% from last month</div>
+                </div>
+                <div class="earnings-card">
+                    <div class="earnings-label">Pending Payments</div>
+                    <div class="earnings-value">$1,500</div>
+                    <div class="earnings-change">2 campaigns in review</div>
+                </div>
+                <div class="earnings-card">
+                    <div class="earnings-label">Average Per Campaign</div>
+                    <div class="earnings-value">$1,562</div>
+                    <div class="earnings-change">Based on 8 campaigns</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Earnings Chart -->
+        <div class="chart-section">
+            <div class="chart-title">Earnings Trend</div>
+            <div class="chart-placeholder">📈 Chart: Monthly earnings over time</div>
+        </div>
+
+        <!-- Earnings Breakdown -->
+        <div class="chart-section">
+            <div class="chart-title">Earnings by Campaign Type</div>
+            <div class="chart-placeholder">📊 Chart: Contest vs Deal earnings breakdown</div>
+        </div>
+
+        <!-- Earnings History -->
+        <div class="earnings-table">
+            <div class="table-header">
+                <div>Campaign</div>
+                <div>Type</div>
+                <div>Amount</div>
+                <div>Status</div>
+            </div>
+            <div class="table-row">
+                <div>
+                    <div class="campaign-name">Summer Tech Challenge</div>
+                    <div class="campaign-brand">TechBrand Co</div>
+                </div>
+                <div>Contest Prize</div>
+                <div class="amount">$2,500</div>
+                <div><span class="status-badge status-completed">Completed</span></div>
+            </div>
+            <div class="table-row">
+                <div>
+                    <div class="campaign-name">Product Launch Collaboration</div>
+                    <div class="campaign-brand">BeautyPlus</div>
+                </div>
+                <div>Deal Payment</div>
+                <div class="amount">$1,500</div>
+                <div><span class="status-badge status-pending">Pending</span></div>
+            </div>
+            <div class="table-row">
+                <div>
+                    <div class="campaign-name">Fashion Forward 2026</div>
+                    <div class="campaign-brand">FashionHub</div>
+                </div>
+                <div>Contest Prize</div>
+                <div class="amount">$4,000</div>
+                <div><span class="status-badge status-completed">Completed</span></div>
+            </div>
+            <div class="table-row">
+                <div>
+                    <div class="campaign-name">Fitness Gear Review</div>
+                    <div class="campaign-brand">FitnessGear Pro</div>
+                </div>
+                <div>Deal Payment</div>
+                <div class="amount">$600</div>
+                <div><span class="status-badge status-completed">Completed</span></div>
+            </div>
+            <div class="table-row">
+                <div>
+                    <div class="campaign-name">Gaming Legends Tournament</div>
+                    <div class="campaign-brand">GameStudio X</div>
+                </div>
+                <div>Contest Prize</div>
+                <div class="amount">$2,500</div>
+                <div><span class="status-badge status-completed">Completed</span></div>
+            </div>
+            <div class="table-row">
+                <div>
+                    <div class="campaign-name">Tech Unboxing Challenge</div>
+                    <div class="campaign-brand">TechBrand Co</div>
+                </div>
+                <div>Contest Prize</div>
+                <div class="amount">$1,800</div>
+                <div><span class="status-badge status-completed">Completed</span></div>
+            </div>
+        </div>
+
+        <!-- Withdrawal Section -->
+        <div style="margin-top: 2rem; background: var(--white); padding: 1.5rem; border-radius: 12px; border: 1px solid var(--border);">
+            <h3 style="font-size: 1.1rem; margin-bottom: 1rem; color: var(--text-dark);">Request Withdrawal</h3>
+            <p style="color: var(--text-light); margin-bottom: 1.5rem;">Available balance: <strong style="color: var(--text-dark);">$11,000</strong></p>
+            <button class="btn btn-primary">Request Withdrawal</button>
+        </div>
+    </main>
+</body>
+</html>

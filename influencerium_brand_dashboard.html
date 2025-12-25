@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brand Dashboard - Influencerium</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-purple: #7C3AED;
+            --accent-pink: #EC4899;
+            --dark-bg: #0F172A;
+            --light-bg: #F8FAFC;
+            --white: #FFFFFF;
+            --text-dark: #1E293B;
+            --text-light: #64748B;
+            --border: #E2E8F0;
+            --success: #10B981;
+            --warning: #F59E0B;
+            --error: #EF4444;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--light-bg);
+            color: var(--text-dark);
+        }
+
+        /* Sidebar Navigation */
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 280px;
+            height: 100vh;
+            background: var(--white);
+            border-right: 1px solid var(--border);
+            padding: 2rem 1.5rem;
+            overflow-y: auto;
+            z-index: 1000;
+        }
+
+        .sidebar-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 2rem;
+            font-size: 1.3rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary-purple), var(--accent-pink));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .sidebar-logo-icon {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, var(--primary-purple), var(--accent-pink));
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-weight: bold;
+        }
+
+        .sidebar-nav {
+            list-style: none;
+        }
+
+        .sidebar-nav li {
+            margin-bottom: 0.5rem;
+        }
+
+        .sidebar-nav a {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1rem;
+            color: var(--text-light);
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+
+        .sidebar-nav a:hover,
+        .sidebar-nav a.active {
+            background: var(--light-bg);
+            color: var(--primary-purple);
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: 280px;
+            padding: 2rem;
+        }
+
+        /* Header */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            background: var(--white);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+        }
+
+        .header h1 {
+            font-size: 1.8rem;
+            color: var(--text-dark);
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.95rem;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-purple), var(--accent-pink));
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(124, 58, 237, 0.4);
+        }
+
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-purple), var(--accent-pink));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: var(--white);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            transition: all 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 30px rgba(124, 58, 237, 0.1);
+            border-color: var(--primary-purple);
+        }
+
+        .stat-label {
+            color: var(--text-light);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-change {
+            font-size: 0.85rem;
+            color: var(--success);
+            font-weight: 600;
+        }
+
+        .stat-change.negative {
+            color: var(--error);
+        }
+
+        /* Charts Section */
+        .charts-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .chart-card {
+            background: var(--white);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+        }
+
+        .chart-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 1rem;
+        }
+
+        .chart-placeholder {
+            width: 100%;
+            height: 300px;
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.05), rgba(236, 72, 153, 0.05));
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        /* Campaigns Section */
+        .campaigns-section {
+            background: var(--white);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            margin-bottom: 2rem;
+        }
+
+        .section-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .campaigns-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .campaigns-table th {
+            background: var(--light-bg);
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+            color: var(--text-dark);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .campaigns-table td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--border);
+            color: var(--text-light);
+        }
+
+        .campaigns-table tr:hover {
+            background: var(--light-bg);
+        }
+
+        .campaign-name {
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .status-active {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--success);
+        }
+
+        .status-pending {
+            background: rgba(245, 158, 11, 0.1);
+            color: var(--warning);
+        }
+
+        .status-completed {
+            background: rgba(124, 58, 237, 0.1);
+            color: var(--primary-purple);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+                border-right: none;
+                border-bottom: 1px solid var(--border);
+                padding: 1rem;
+            }
+
+            .main-content {
+                margin-left: 0;
+                padding: 1rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .charts-section {
+                grid-template-columns: 1fr;
+            }
+
+            .header {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+
+            .header-actions {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-logo">
+            <div class="sidebar-logo-icon">⬆</div>
+            Influencerium
+        </div>
+        <nav class="sidebar-nav">
+            <li><a href="#" class="active">📊 Dashboard</a></li>
+            <li><a href="influencerium_brand_profile.html">🏢 Profile</a></li>
+            <li><a href="influencerium_brand_campaigns.html">🎯 Campaigns</a></li>
+            <li><a href="influencerium_brand_creators.html">👥 Creators</a></li>
+            <li><a href="influencerium_brand_submissions.html">📹 Submissions</a></li>
+            <li><a href="influencerium_brand_analytics.html">📈 Analytics</a></li>
+            <li><a href="influencerium_brand_settings.html">⚙️ Settings</a></li>
+            <li><a href="influencerium_index.html">🏠 Home</a></li>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Header -->
+        <div class="header">
+            <div>
+                <h1>Welcome back, TechBrand Co! 👋</h1>
+            </div>
+            <div class="header-actions">
+                <button class="btn btn-primary">+ Create Campaign</button>
+                <div class="user-menu">
+                    <div class="user-avatar">TB</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Stats Grid -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-label">Total Spent</div>
+                <div class="stat-value">$45,000</div>
+                <div class="stat-change">↑ 12% from last month</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Active Campaigns</div>
+                <div class="stat-value">5</div>
+                <div class="stat-change">2 new this week</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Total Reach</div>
+                <div class="stat-value">2.8M</div>
+                <div class="stat-change">↑ 18% from last month</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Average ROI</div>
+                <div class="stat-value">4.2x</div>
+                <div class="stat-change">↑ 0.5x from last month</div>
+            </div>
+        </div>
+
+        <!-- Charts Section -->
+        <div class="charts-section">
+            <div class="chart-card">
+                <div class="chart-title">Campaign Spending</div>
+                <div class="chart-placeholder">💰 Chart: Monthly spending trends</div>
+            </div>
+            <div class="chart-card">
+                <div class="chart-title">ROI Performance</div>
+                <div class="chart-placeholder">📊 Chart: ROI by campaign</div>
+            </div>
+        </div>
+
+        <!-- Active Campaigns -->
+        <div class="campaigns-section">
+            <div class="section-title">
+                <span>Active Campaigns</span>
+                <a href="influencerium_brand_campaigns.html" style="color: var(--primary-purple); text-decoration: none; font-weight: 600;">View All →</a>
+            </div>
+            <table class="campaigns-table">
+                <thead>
+                    <tr>
+                        <th>Campaign</th>
+                        <th>Type</th>
+                        <th>Status</th>
+                        <th>Budget</th>
+                        <th>Reach</th>
+                        <th>ROI</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="campaign-name">Summer Tech Challenge</td>
+                        <td>Contest</td>
+                        <td><span class="status-badge status-active">Active</span></td>
+                        <td>$5,000</td>
+                        <td>450K</td>
+                        <td>3.75x</td>
+                        <td><a href="#" style="color: var(--primary-purple); text-decoration: none;">View →</a></td>
+                    </tr>
+                    <tr>
+                        <td class="campaign-name">Product Launch Collaboration</td>
+                        <td>Deal</td>
+                        <td><span class="status-badge status-active">Active</span></td>
+                        <td>$10,000</td>
+                        <td>280K</td>
+                        <td>4.25x</td>
+                        <td><a href="#" style="color: var(--primary-purple); text-decoration: none;">View →</a></td>
+                    </tr>
+                    <tr>
+                        <td class="campaign-name">Fashion Forward 2026</td>
+                        <td>Contest</td>
+                        <td><span class="status-badge status-active">Active</span></td>
+                        <td>$8,000</td>
+                        <td>520K</td>
+                        <td>4.50x</td>
+                        <td><a href="#" style="color: var(--primary-purple); text-decoration: none;">View →</a></td>
+                    </tr>
+                    <tr>
+                        <td class="campaign-name">Fitness Gear Review</td>
+                        <td>Deal</td>
+                        <td><span class="status-badge status-pending">Pending Submissions</span></td>
+                        <td>$6,000</td>
+                        <td>180K</td>
+                        <td>2.80x</td>
+                        <td><a href="#" style="color: var(--primary-purple); text-decoration: none;">View →</a></td>
+                    </tr>
+                    <tr>
+                        <td class="campaign-name">Gaming Legends Tournament</td>
+                        <td>Contest</td>
+                        <td><span class="status-badge status-active">Active</span></td>
+                        <td>$15,000</td>
+                        <td>850K</td>
+                        <td>5.25x</td>
+                        <td><a href="#" style="color: var(--primary-purple); text-decoration: none;">View →</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Recent Submissions -->
+        <div class="campaigns-section">
+            <div class="section-title">
+                <span>Recent Submissions</span>
+                <a href="influencerium_brand_submissions.html" style="color: var(--primary-purple); text-decoration: none; font-weight: 600;">View All →</a>
+            </div>
+            <table class="campaigns-table">
+                <thead>
+                    <tr>
+                        <th>Creator</th>
+                        <th>Campaign</th>
+                        <th>Status</th>
+                        <th>Views</th>
+                        <th>Engagement</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="campaign-name">TechCreator</td>
+                        <td>Summer Tech Challenge</td>
+                        <td><span class="status-badge status-active">Approved</span></td>
+                        <td>125K</td>
+                        <td>4.8%</td>
+                        <td><a href="#" style="color: var(--primary-purple); text-decoration: none;">Review →</a></td>
+                    </tr>
+                    <tr>
+                        <td class="campaign-name">BeautyInfluencer</td>
+                        <td>Product Launch Collaboration</td>
+                        <td><span class="status-badge status-pending">Pending Review</span></td>
+                        <td>145K</td>
+                        <td>5.2%</td>
+                        <td><a href="#" style="color: var(--primary-purple); text-decoration: none;">Review →</a></td>
+                    </tr>
+                    <tr>
+                        <td class="campaign-name">FashionMike</td>
+                        <td>Fashion Forward 2026</td>
+                        <td><span class="status-badge status-active">Approved</span></td>
+                        <td>156K</td>
+                        <td>5.5%</td>
+                        <td><a href="#" style="color: var(--primary-purple); text-decoration: none;">Review →</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+</body>
+</html>

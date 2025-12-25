@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brand Profile - Influencerium</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-purple: #7C3AED;
+            --accent-pink: #EC4899;
+            --dark-bg: #0F172A;
+            --light-bg: #F8FAFC;
+            --white: #FFFFFF;
+            --text-dark: #1E293B;
+            --text-light: #64748B;
+            --border: #E2E8F0;
+            --success: #10B981;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--light-bg);
+            color: var(--text-dark);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            margin-bottom: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .header-content {
+            display: flex;
+            gap: 2rem;
+            align-items: flex-start;
+        }
+
+        .brand-logo {
+            width: 120px;
+            height: 120px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--primary-purple), var(--accent-pink));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-size: 2.5rem;
+            font-weight: bold;
+        }
+
+        .brand-info h1 {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .brand-info p {
+            color: var(--text-light);
+            margin-bottom: 0.5rem;
+        }
+
+        .brand-stats {
+            display: flex;
+            gap: 2rem;
+            margin-top: 1rem;
+        }
+
+        .brand-stat {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .brand-stat-value {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+
+        .brand-stat-label {
+            font-size: 0.85rem;
+            color: var(--text-light);
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.95rem;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-purple), var(--accent-pink));
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(124, 58, 237, 0.4);
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .card {
+            background: var(--white);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+        }
+
+        .card h3 {
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+        }
+
+        .card p {
+            color: var(--text-light);
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .info-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .info-item:last-child {
+            border-bottom: none;
+        }
+
+        .info-label {
+            color: var(--text-light);
+            font-weight: 500;
+        }
+
+        .info-value {
+            color: var(--text-dark);
+            font-weight: 600;
+        }
+
+        .badge {
+            display: inline-block;
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.1), rgba(236, 72, 153, 0.1));
+            color: var(--primary-purple);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .badge.verified {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--success);
+        }
+
+        .campaign-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .campaign-item {
+            background: var(--light-bg);
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .campaign-item-title {
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .campaign-item-stat {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: var(--light-bg);
+            border-radius: 8px;
+            text-decoration: none;
+            color: var(--primary-purple);
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .social-link:hover {
+            background: linear-gradient(135deg, var(--primary-purple), var(--accent-pink));
+            color: var(--white);
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+            }
+
+            .header-content {
+                flex-direction: column;
+            }
+
+            .brand-stats {
+                flex-wrap: wrap;
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="header-content">
+                <div class="brand-logo">TB</div>
+                <div class="brand-info">
+                    <h1>TechBrand Co</h1>
+                    <p>Technology & Innovation</p>
+                    <div class="badge verified">✓ Verified Brand</div>
+                    <div class="brand-stats">
+                        <div class="brand-stat">
+                            <div class="brand-stat-value">15</div>
+                            <div class="brand-stat-label">Campaigns</div>
+                        </div>
+                        <div class="brand-stat">
+                            <div class="brand-stat-value">$45K</div>
+                            <div class="brand-stat-label">Total Spent</div>
+                        </div>
+                        <div class="brand-stat">
+                            <div class="brand-stat-value">2.8M</div>
+                            <div class="brand-stat-label">Total Reach</div>
+                        </div>
+                        <div class="brand-stat">
+                            <div class="brand-stat-value">4.2x</div>
+                            <div class="brand-stat-label">Avg ROI</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button class="btn btn-primary">Follow Brand</button>
+        </div>
+
+        <!-- Main Content -->
+        <div class="grid">
+            <!-- About -->
+            <div class="card">
+                <h3>About</h3>
+                <p>
+                    Leading tech brand for innovative solutions and gadgets. We partner with creators to showcase our products authentically and reach engaged audiences. Our mission is to connect innovative technology with passionate creators.
+                </p>
+                <div class="info-item">
+                    <div class="info-label">Website</div>
+                    <div class="info-value"><a href="#" style="color: var(--primary-purple); text-decoration: none;">techbrand.com</a></div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Industry</div>
+                    <div class="info-value">Technology</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Founded</div>
+                    <div class="info-value">2015</div>
+                </div>
+            </div>
+
+            <!-- Contact -->
+            <div class="card">
+                <h3>Contact Information</h3>
+                <div class="info-item">
+                    <div class="info-label">Email</div>
+                    <div class="info-value">contact@techbrand.com</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Phone</div>
+                    <div class="info-value">+1-555-0123</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Address</div>
+                    <div class="info-value">123 Tech Street, San Francisco, CA</div>
+                </div>
+                <div style="margin-top: 1rem;">
+                    <h4 style="color: var(--text-dark); margin-bottom: 0.75rem;">Follow Us</h4>
+                    <div class="social-links">
+                        <a href="#" class="social-link">f</a>
+                        <a href="#" class="social-link">𝕏</a>
+                        <a href="#" class="social-link">in</a>
+                        <a href="#" class="social-link">📷</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Performance -->
+            <div class="card">
+                <h3>Performance Metrics</h3>
+                <div class="info-item">
+                    <div class="info-label">Avg Campaign ROI</div>
+                    <div class="info-value">4.2x</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Avg Engagement Rate</div>
+                    <div class="info-value">4.8%</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Total Reach</div>
+                    <div class="info-value">2.8M</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Creator Rating</div>
+                    <div class="info-value">4.7/5 ⭐</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recent Campaigns -->
+        <div class="card">
+            <h3>Recent Campaigns</h3>
+            <div class="campaign-grid">
+                <div class="campaign-item">
+                    <div class="campaign-item-title">Summer Tech Challenge</div>
+                    <div class="campaign-item-stat">$5K Budget</div>
+                    <div class="campaign-item-stat">450K Reach</div>
+                </div>
+                <div class="campaign-item">
+                    <div class="campaign-item-title">Product Launch Collab</div>
+                    <div class="campaign-item-stat">$10K Budget</div>
+                    <div class="campaign-item-stat">280K Reach</div>
+                </div>
+                <div class="campaign-item">
+                    <div class="campaign-item-title">Tech Unboxing Deal</div>
+                    <div class="campaign-item-stat">$6K Budget</div>
+                    <div class="campaign-item-stat">180K Reach</div>
+                </div>
+                <div class="campaign-item">
+                    <div class="campaign-item-title">Gaming Legends</div>
+                    <div class="campaign-item-stat">$15K Budget</div>
+                    <div class="campaign-item-stat">850K Reach</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Back Button -->
+        <div style="margin-top: 2rem;">
+            <a href="influencerium_index.html" style="color: var(--primary-purple); text-decoration: none; font-weight: 600;">← Back to Home</a>
+        </div>
+    </div>
+</body>
+</html>

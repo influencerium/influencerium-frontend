@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submissions - Influencerium</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-purple: #7C3AED;
+            --accent-pink: #EC4899;
+            --dark-bg: #0F172A;
+            --light-bg: #F8FAFC;
+            --white: #FFFFFF;
+            --text-dark: #1E293B;
+            --text-light: #64748B;
+            --border: #E2E8F0;
+            --success: #10B981;
+            --warning: #F59E0B;
+            --error: #EF4444;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--light-bg);
+            color: var(--text-dark);
+        }
+
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 280px;
+            height: 100vh;
+            background: var(--white);
+            border-right: 1px solid var(--border);
+            padding: 2rem 1.5rem;
+            overflow-y: auto;
+            z-index: 1000;
+        }
+
+        .sidebar-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 2rem;
+            font-size: 1.3rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary-purple), var(--accent-pink));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .sidebar-logo-icon {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, var(--primary-purple), var(--accent-pink));
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-weight: bold;
+        }
+
+        .sidebar-nav {
+            list-style: none;
+        }
+
+        .sidebar-nav li {
+            margin-bottom: 0.5rem;
+        }
+
+        .sidebar-nav a {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1rem;
+            color: var(--text-light);
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+
+        .sidebar-nav a:hover,
+        .sidebar-nav a.active {
+            background: var(--light-bg);
+            color: var(--primary-purple);
+        }
+
+        .main-content {
+            margin-left: 280px;
+            padding: 2rem;
+        }
+
+        .header {
+            margin-bottom: 2rem;
+            background: var(--white);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+        }
+
+        .header h1 {
+            font-size: 1.8rem;
+            color: var(--text-dark);
+        }
+
+        .filters {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--border);
+            background: var(--white);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 500;
+            color: var(--text-light);
+        }
+
+        .filter-btn.active {
+            background: linear-gradient(135deg, var(--primary-purple), var(--accent-pink));
+            color: var(--white);
+            border-color: var(--primary-purple);
+        }
+
+        .submissions-table {
+            background: var(--white);
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            overflow: hidden;
+        }
+
+        .table-header {
+            background: var(--light-bg);
+            padding: 1rem;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+            gap: 1rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .table-row {
+            padding: 1rem;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+            gap: 1rem;
+            border-bottom: 1px solid var(--border);
+            align-items: center;
+        }
+
+        .table-row:last-child {
+            border-bottom: none;
+        }
+
+        .table-row:hover {
+            background: var(--light-bg);
+        }
+
+        .creator-info {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .creator-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-purple), var(--accent-pink));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .creator-name {
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .campaign-name {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .status-approved {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--success);
+        }
+
+        .status-pending {
+            background: rgba(245, 158, 11, 0.1);
+            color: var(--warning);
+        }
+
+        .status-rejected {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--error);
+        }
+
+        .metrics {
+            text-align: center;
+        }
+
+        .metric-value {
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+
+        .metric-label {
+            color: var(--text-light);
+            font-size: 0.75rem;
+        }
+
+        .action-link {
+            color: var(--primary-purple);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+        }
+
+        .action-link:hover {
+            color: var(--accent-pink);
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+                border-right: none;
+                border-bottom: 1px solid var(--border);
+                padding: 1rem;
+            }
+
+            .main-content {
+                margin-left: 0;
+                padding: 1rem;
+            }
+
+            .table-header,
+            .table-row {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-logo">
+            <div class="sidebar-logo-icon">⬆</div>
+            Influencerium
+        </div>
+        <nav class="sidebar-nav">
+            <li><a href="influencerium_brand_dashboard.html">📊 Dashboard</a></li>
+            <li><a href="influencerium_brand_profile.html">🏢 Profile</a></li>
+            <li><a href="influencerium_brand_campaigns.html">🎯 Campaigns</a></li>
+            <li><a href="influencerium_brand_creators.html">👥 Creators</a></li>
+            <li><a href="#" class="active">📹 Submissions</a></li>
+            <li><a href="influencerium_brand_analytics.html">📈 Analytics</a></li>
+            <li><a href="influencerium_brand_settings.html">⚙️ Settings</a></li>
+            <li><a href="influencerium_index.html">🏠 Home</a></li>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Header -->
+        <div class="header">
+            <h1>Content Submissions</h1>
+        </div>
+
+        <!-- Filters -->
+        <div class="filters">
+            <button class="filter-btn active">All</button>
+            <button class="filter-btn">Pending Review</button>
+            <button class="filter-btn">Approved</button>
+            <button class="filter-btn">Rejected</button>
+        </div>
+
+        <!-- Submissions Table -->
+        <div class="submissions-table">
+            <div class="table-header">
+                <div>Creator</div>
+                <div>Campaign</div>
+                <div>Status</div>
+                <div>Views</div>
+                <div>Action</div>
+            </div>
+
+            <div class="table-row">
+                <div class="creator-info">
+                    <div class="creator-avatar">TC</div>
+                    <div>
+                        <div class="creator-name">TechCreator</div>
+                        <div class="campaign-name">@techcreator</div>
+                    </div>
+                </div>
+                <div>Summer Tech Challenge</div>
+                <div><span class="status-badge status-approved">Approved</span></div>
+                <div class="metrics">
+                    <div class="metric-value">125K</div>
+                    <div class="metric-label">views</div>
+                </div>
+                <div><a href="#" class="action-link">Review →</a></div>
+            </div>
+
+            <div class="table-row">
+                <div class="creator-info">
+                    <div class="creator-avatar">BI</div>
+                    <div>
+                        <div class="creator-name">BeautyInfluencer</div>
+                        <div class="campaign-name">@beautyinfluencer</div>
+                    </div>
+                </div>
+                <div>Product Launch Collaboration</div>
+                <div><span class="status-badge status-pending">Pending Review</span></div>
+                <div class="metrics">
+                    <div class="metric-value">145K</div>
+                    <div class="metric-label">views</div>
+                </div>
+                <div><a href="#" class="action-link">Review →</a></div>
+            </div>
+
+            <div class="table-row">
+                <div class="creator-info">
+                    <div class="creator-avatar">FM</div>
+                    <div>
+                        <div class="creator-name">FashionMike</div>
+                        <div class="campaign-name">@fashionmike</div>
+                    </div>
+                </div>
+                <div>Fashion Forward 2026</div>
+                <div><span class="status-badge status-approved">Approved</span></div>
+                <div class="metrics">
+                    <div class="metric-value">156K</div>
+                    <div class="metric-label">views</div>
+                </div>
+                <div><a href="#" class="action-link">Review →</a></div>
+            </div>
+
+            <div class="table-row">
+                <div class="creator-info">
+                    <div class="creator-avatar">FE</div>
+                    <div>
+                        <div class="creator-name">FitnessEmma</div>
+                        <div class="campaign-name">@fitnessemma</div>
+                    </div>
+                </div>
+                <div>Fitness Gear Review</div>
+                <div><span class="status-badge status-approved">Approved</span></div>
+                <div class="metrics">
+                    <div class="metric-value">95K</div>
+                    <div class="metric-label">views</div>
+                </div>
+                <div><a href="#" class="action-link">Review →</a></div>
+            </div>
+
+            <div class="table-row">
+                <div class="creator-info">
+                    <div class="creator-avatar">GP</div>
+                    <div>
+                        <div class="creator-name">GamingPro</div>
+                        <div class="campaign-name">@gamingpro</div>
+                    </div>
+                </div>
+                <div>Gaming Legends Tournament</div>
+                <div><span class="status-badge status-approved">Approved</span></div>
+                <div class="metrics">
+                    <div class="metric-value">250K</div>
+                    <div class="metric-label">views</div>
+                </div>
+                <div><a href="#" class="action-link">Review →</a></div>
+            </div>
+
+            <div class="table-row">
+                <div class="creator-info">
+                    <div class="creator-avatar">FB</div>
+                    <div>
+                        <div class="creator-name">FashionBlogger</div>
+                        <div class="campaign-name">@fashionblogger</div>
+                    </div>
+                </div>
+                <div>Summer Tech Challenge</div>
+                <div><span class="status-badge status-pending">Pending Review</span></div>
+                <div class="metrics">
+                    <div class="metric-value">98K</div>
+                    <div class="metric-label">views</div>
+                </div>
+                <div><a href="#" class="action-link">Review →</a></div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

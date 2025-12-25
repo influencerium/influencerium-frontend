@@ -1,0 +1,1129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Influencerium - Where Influence Meets Opportunity</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-purple: #7C3AED;
+            --accent-pink: #EC4899;
+            --dark-bg: #0F172A;
+            --light-bg: #F8FAFC;
+            --white: #FFFFFF;
+            --text-dark: #1E293B;
+            --text-light: #64748B;
+            --border: #E2E8F0;
+            --success: #10B981;
+            --warning: #F59E0B;
+            --error: #EF4444;
+            --info: #3B82F6;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            color: var(--text-dark);
+            line-height: 1.6;
+            background: var(--white);
+        }
+
+        /* Navigation */
+        nav {
+            background: var(--white);
+            border-bottom: 1px solid var(--border);
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary-purple), var(--accent-pink));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, var(--primary-purple), var(--accent-pink));
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-purple);
+        }
+
+        .auth-buttons {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.95rem;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-purple), var(--accent-pink));
+            color: var(--white);
+            box-shadow: 0 4px 15px rgba(124, 58, 237, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(124, 58, 237, 0.4);
+        }
+
+        .btn-secondary {
+            background: var(--white);
+            color: var(--primary-purple);
+            border: 2px solid var(--primary-purple);
+        }
+
+        .btn-secondary:hover {
+            background: var(--light-bg);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--dark-bg) 0%, #1a2847 100%);
+            color: var(--white);
+            padding: 6rem 2rem;
+            text-align: center;
+        }
+
+        .hero-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .hero-gradient {
+            background: linear-gradient(135deg, var(--primary-purple), var(--accent-pink));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            color: #cbd5e1;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 3rem;
+        }
+
+        .hero-image {
+            margin-top: 3rem;
+            padding: 2rem;
+            background: rgba(124, 58, 237, 0.1);
+            border-radius: 16px;
+            border: 1px solid rgba(124, 58, 237, 0.2);
+        }
+
+        .hero-image svg {
+            width: 100%;
+            max-width: 500px;
+            height: auto;
+        }
+
+        /* Features Section */
+        .features {
+            padding: 6rem 2rem;
+            background: var(--light-bg);
+        }
+
+        .features-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+        }
+
+        .section-title p {
+            font-size: 1.1rem;
+            color: var(--text-light);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .feature-card {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            transition: all 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 10px 30px rgba(124, 58, 237, 0.15);
+            border-color: var(--primary-purple);
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary-purple), var(--accent-pink));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-dark);
+        }
+
+        .feature-card p {
+            color: var(--text-light);
+            line-height: 1.6;
+        }
+
+        /* User Type Section */
+        .user-types {
+            padding: 6rem 2rem;
+            background: var(--white);
+        }
+
+        .user-types-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .user-types-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+
+        .user-type-card {
+            background: linear-gradient(135deg, var(--light-bg), var(--white));
+            padding: 3rem;
+            border-radius: 16px;
+            border: 2px solid var(--border);
+            transition: all 0.3s;
+        }
+
+        .user-type-card:hover {
+            border-color: var(--primary-purple);
+            box-shadow: 0 15px 40px rgba(124, 58, 237, 0.15);
+        }
+
+        .user-type-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .user-type-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--primary-purple), var(--accent-pink));
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+        }
+
+        .user-type-card h3 {
+            font-size: 1.8rem;
+            color: var(--text-dark);
+            margin-bottom: 1rem;
+        }
+
+        .user-type-card p {
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+        }
+
+        .benefits-list {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        .benefits-list li {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+        }
+
+        .benefits-list li:before {
+            content: "✓";
+            color: var(--success);
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        /* How It Works */
+        .how-it-works {
+            padding: 6rem 2rem;
+            background: linear-gradient(135deg, var(--dark-bg) 0%, #1a2847 100%);
+            color: var(--white);
+        }
+
+        .how-it-works-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .how-it-works .section-title {
+            color: var(--white);
+        }
+
+        .how-it-works .section-title p {
+            color: #cbd5e1;
+        }
+
+        .steps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .step-card {
+            background: rgba(124, 58, 237, 0.1);
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid rgba(124, 58, 237, 0.3);
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .step-card:hover {
+            background: rgba(124, 58, 237, 0.2);
+            border-color: var(--accent-pink);
+        }
+
+        .step-number {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary-purple), var(--accent-pink));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin: 0 auto 1rem;
+        }
+
+        .step-card h4 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .step-card p {
+            color: #cbd5e1;
+            font-size: 0.95rem;
+        }
+
+        /* CTA Section */
+        .cta {
+            padding: 4rem 2rem;
+            background: linear-gradient(135deg, var(--primary-purple), var(--accent-pink));
+            color: var(--white);
+            text-align: center;
+        }
+
+        .cta-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .cta h2 {
+            font-size: 2.2rem;
+            margin-bottom: 1rem;
+        }
+
+        .cta p {
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark-bg);
+            color: #cbd5e1;
+            padding: 3rem 2rem;
+            text-align: center;
+            border-top: 1px solid rgba(124, 58, 237, 0.2);
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: #cbd5e1;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary-purple);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+
+            .section-title h2 {
+                font-size: 1.8rem;
+            }
+
+            .nav-links {
+                gap: 1rem;
+                font-size: 0.9rem;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+                text-align: center;
+            }
+
+            .user-types-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Coming Soon Badge */
+        .coming-soon {
+            display: inline-block;
+            background: var(--warning);
+            color: var(--white);
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-left: 0.5rem;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            animation: fadeIn 0.3s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-content {
+            background-color: var(--white);
+            margin: 5% auto;
+            padding: 2rem;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            animation: slideIn 0.3s;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .close {
+            color: var(--text-light);
+            float: right;
+            font-size: 1.5rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .close:hover {
+            color: var(--text-dark);
+        }
+
+        .modal h2 {
+            color: var(--text-dark);
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text-dark);
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: inherit;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--primary-purple);
+            box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1);
+        }
+
+        .oauth-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .oauth-btn {
+            flex: 1;
+            padding: 0.75rem;
+            border: 1px solid var(--border);
+            background: var(--white);
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .oauth-btn:hover {
+            background: var(--light-bg);
+            border-color: var(--primary-purple);
+        }
+
+        .divider {
+            text-align: center;
+            margin: 1.5rem 0;
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        .divider:before {
+            content: "";
+            display: inline-block;
+            width: 40%;
+            height: 1px;
+            background: var(--border);
+            vertical-align: middle;
+            margin-right: 0.5rem;
+        }
+
+        .divider:after {
+            content: "";
+            display: inline-block;
+            width: 40%;
+            height: 1px;
+            background: var(--border);
+            vertical-align: middle;
+            margin-left: 0.5rem;
+        }
+
+        .form-group.full {
+            margin-bottom: 2rem;
+        }
+
+        .signup-link {
+            text-align: center;
+            margin-top: 1.5rem;
+            color: var(--text-light);
+        }
+
+        .signup-link a {
+            color: var(--primary-purple);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .signup-link a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo">
+                <div class="logo-icon">⬆</div>
+                Influencerium
+            </div>
+            <ul class="nav-links">
+                <li><a href="#features">Features</a></li>
+                <li><a href="#how-it-works">How It Works</a></li>
+                <li><a href="#for-creators">For Creators</a></li>
+                <li><a href="#for-brands">For Brands</a></li>
+            </ul>
+            <div class="auth-buttons">
+                <button class="btn btn-secondary" onclick="openLoginModal()">Login</button>
+                <button class="btn btn-primary" onclick="openSignupModal()">Get Started</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-container">
+            <h1>Where <span class="hero-gradient">Influence</span> Meets Opportunity</h1>
+            <p>Connect creators with brands. Monetize influence. Drive real results.</p>
+            <div class="hero-buttons">
+                <button class="btn btn-primary" onclick="openSignupModal()">Start as Creator</button>
+                <button class="btn btn-secondary" onclick="openSignupModal()">Start as Brand</button>
+            </div>
+            <div class="hero-image">
+                <svg viewBox="0 0 500 300" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Decorative SVG -->
+                    <circle cx="100" cy="100" r="40" fill="rgba(124, 58, 237, 0.3)"/>
+                    <circle cx="400" cy="150" r="50" fill="rgba(236, 72, 153, 0.3)"/>
+                    <circle cx="250" cy="250" r="35" fill="rgba(124, 58, 237, 0.2)"/>
+                    <path d="M 100 100 Q 250 50 400 150" stroke="rgba(124, 58, 237, 0.5)" stroke-width="2" fill="none"/>
+                    <path d="M 100 100 L 250 250 L 400 150" stroke="rgba(236, 72, 153, 0.5)" stroke-width="2" fill="none"/>
+                </svg>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="features-container">
+            <div class="section-title">
+                <h2>Why Choose Influencerium?</h2>
+                <p>A complete platform designed to empower creators and brands to achieve their goals together</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🎯</div>
+                    <h3>Targeted Campaigns</h3>
+                    <p>Brands reach the right creators for their niche. Creators find opportunities that match their audience.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">💰</div>
+                    <h3>Fair Compensation</h3>
+                    <p>Transparent pricing, secure payments, and performance-based bonuses. Creators earn what they deserve.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3>Real Analytics</h3>
+                    <p>Track performance metrics, ROI, and engagement. Data-driven insights for better decisions.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🤝</div>
+                    <h3>Easy Collaboration</h3>
+                    <p>Streamlined communication, content approval, and revision management. Collaboration made simple.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⭐</div>
+                    <h3>Quality Assurance</h3>
+                    <p>Verified creators, authentic content, and brand safety measures. Trust and quality guaranteed.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🚀</div>
+                    <h3>Growth Opportunities</h3>
+                    <p>Scale your influence or reach. Unlimited potential for creators and brands to grow together.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- User Types Section -->
+    <section class="user-types" id="for-creators">
+        <div class="user-types-container">
+            <div class="section-title">
+                <h2>Tailored Solutions for Everyone</h2>
+                <p>Whether you're a creator looking to monetize or a brand seeking authentic reach, we have the perfect solution</p>
+            </div>
+            <div class="user-types-grid">
+                <!-- For Creators -->
+                <div class="user-type-card">
+                    <div class="user-type-header">
+                        <div class="user-type-icon">🎬</div>
+                        <div>
+                            <h3>For Creators</h3>
+                        </div>
+                    </div>
+                    <p><strong>Monetize Your Passion. Grow Your Influence.</strong></p>
+                    <p>Turn your creativity into income. Connect with brands that align with your values and audience.</p>
+                    
+                    <h4 style="margin-top: 1.5rem; margin-bottom: 1rem; color: var(--primary-purple);">Key Benefits:</h4>
+                    <ul class="benefits-list">
+                        <li>Multiple income streams from contests and brand deals</li>
+                        <li>Flexible opportunities that fit your schedule</li>
+                        <li>Performance-based bonuses and incentives</li>
+                        <li>Build your portfolio and credibility</li>
+                        <li>Access to exclusive brand partnerships</li>
+                        <li>Transparent payment system with secure transactions</li>
+                        <li>Grow your follower base organically</li>
+                        <li>Detailed analytics to track your growth</li>
+                    </ul>
+                    
+                    <h4 style="margin-top: 1.5rem; margin-bottom: 1rem; color: var(--primary-purple);">How You Earn:</h4>
+                    <p style="margin-bottom: 1rem;">
+                        <strong>Contests:</strong> Compete with other creators. Win prizes based on engagement and views.
+                    </p>
+                    <p style="margin-bottom: 1rem;">
+                        <strong>Brand Deals:</strong> Direct collaborations with brands. Fixed payments + performance bonuses.
+                    </p>
+                    <p style="margin-bottom: 1rem;">
+                        <strong>Referrals:</strong> Earn commissions by referring other creators to the platform.
+                    </p>
+
+                    <button class="btn btn-primary" onclick="openSignupModal()" style="width: 100%; margin-top: 1.5rem;">Start Earning Today</button>
+                </div>
+
+                <!-- For Brands -->
+                <div class="user-type-card" id="for-brands">
+                    <div class="user-type-header">
+                        <div class="user-type-icon">🏢</div>
+                        <div>
+                            <h3>For Brands</h3>
+                        </div>
+                    </div>
+                    <p><strong>Gain Visibility. Drive Sales. Build Community.</strong></p>
+                    <p>Reach authentic audiences through trusted creators. Amplify your message with genuine endorsements.</p>
+                    
+                    <h4 style="margin-top: 1.5rem; margin-bottom: 1rem; color: var(--primary-purple);">Key Benefits:</h4>
+                    <ul class="benefits-list">
+                        <li>Access to 35,000+ verified creators across all niches</li>
+                        <li>Targeted campaigns to reach your ideal audience</li>
+                        <li>Authentic content that resonates with consumers</li>
+                        <li>Measurable ROI and performance tracking</li>
+                        <li>Cost-effective marketing compared to traditional ads</li>
+                        <li>Full content ownership and usage rights</li>
+                        <li>Flexible campaign types (contests, direct deals)</li>
+                        <li>Dedicated support for campaign success</li>
+                    </ul>
+                    
+                    <h4 style="margin-top: 1.5rem; margin-bottom: 1rem; color: var(--primary-purple);">Campaign Types:</h4>
+                    <p style="margin-bottom: 1rem;">
+                        <strong>Contests:</strong> Launch competitions to generate high-volume, diverse content. Pay only for winners.
+                    </p>
+                    <p style="margin-bottom: 1rem;">
+                        <strong>Brand Deals:</strong> Direct partnerships with specific creators. Full control and approval process.
+                    </p>
+                    <p style="margin-bottom: 1rem;">
+                        <strong>Influencer Campaigns:</strong> Multi-creator campaigns for maximum reach and impact.
+                    </p>
+
+                    <button class="btn btn-primary" onclick="openSignupModal()" style="width: 100%; margin-top: 1.5rem;">Launch Your Campaign</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="how-it-works" id="how-it-works">
+        <div class="how-it-works-container">
+            <div class="section-title">
+                <h2>How Influencerium Works</h2>
+                <p>Simple, transparent, and designed for success</p>
+            </div>
+            <div class="steps-grid">
+                <div class="step-card">
+                    <div class="step-number">1</div>
+                    <h4>Sign Up</h4>
+                    <p>Create your account as a creator or brand. Verify your identity and set up your profile.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">2</div>
+                    <h4>Connect</h4>
+                    <p>Creators browse opportunities. Brands discover creators. Find the perfect match.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">3</div>
+                    <h4>Collaborate</h4>
+                    <p>Agree on terms, create content, and manage the project through our platform.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">4</div>
+                    <h4>Deliver</h4>
+                    <p>Submit content for approval. Get feedback and make revisions if needed.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">5</div>
+                    <h4>Publish</h4>
+                    <p>Content goes live. Track performance in real-time with detailed analytics.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">6</div>
+                    <h4>Get Paid</h4>
+                    <p>Secure payments processed. Creators earn, brands see results. Everyone wins.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Coming Soon Features -->
+    <section class="features" style="background: var(--white);">
+        <div class="features-container">
+            <div class="section-title">
+                <h2>More Features Coming Soon <span class="coming-soon">BETA</span></h2>
+                <p>We're constantly innovating to bring you more powerful tools and opportunities</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">📱</div>
+                    <h3>Mobile App</h3>
+                    <p>Manage campaigns and submissions on the go. iOS and Android apps coming soon.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🤖</div>
+                    <h3>AI Matching</h3>
+                    <p>Smart algorithm to match creators with brands based on audience fit and performance.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">💬</div>
+                    <h3>Live Chat</h3>
+                    <p>Real-time messaging between creators and brands for seamless communication.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📈</div>
+                    <h3>Advanced Analytics</h3>
+                    <p>Deep insights into audience demographics, engagement patterns, and ROI metrics.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎁</div>
+                    <h3>Affiliate Program</h3>
+                    <p>Earn commissions by referring creators and brands to Influencerium.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🌍</div>
+                    <h3>Global Expansion</h3>
+                    <p>Multi-language support and local payment methods for creators worldwide.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="cta-container">
+            <h2>Ready to Transform Your Influence?</h2>
+            <p>Join thousands of creators and brands already succeeding on Influencerium</p>
+            <button class="btn btn-secondary" onclick="openSignupModal()" style="background: var(--white); color: var(--primary-purple); border: none;">Get Started Free</button>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="#about">About</a>
+                <a href="#privacy">Privacy Policy</a>
+                <a href="#terms">Terms of Service</a>
+                <a href="#contact">Contact</a>
+                <a href="#blog">Blog</a>
+            </div>
+            <p>&copy; 2025 Influencerium. All rights reserved. Where Influence Meets Opportunity.</p>
+        </div>
+    </footer>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeLoginModal()">&times;</span>
+            <h2>Welcome Back</h2>
+            
+            <div class="oauth-buttons">
+                <button class="oauth-btn" onclick="handleGoogleLogin()">
+                    <span>🔵</span> Google
+                </button>
+                <button class="oauth-btn" onclick="handleEmailLogin()">
+                    <span>✉️</span> Email
+                </button>
+            </div>
+
+            <div class="divider">or</div>
+
+            <form id="emailLoginForm" style="display: none;">
+                <div class="form-group">
+                    <label for="loginEmail">Email Address</label>
+                    <input type="email" id="loginEmail" required placeholder="your@email.com">
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">Password</label>
+                    <input type="password" id="loginPassword" required placeholder="••••••••">
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Login</button>
+            </form>
+
+            <div class="signup-link">
+                Don't have an account? <a href="#" onclick="switchToSignup()">Sign up here</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Signup Modal -->
+    <div id="signupModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeSignupModal()">&times;</span>
+            <h2>Join Influencerium</h2>
+            
+            <div class="oauth-buttons">
+                <button class="oauth-btn" onclick="handleGoogleSignup()">
+                    <span>🔵</span> Google
+                </button>
+                <button class="oauth-btn" onclick="handleEmailSignup()">
+                    <span>✉️</span> Email
+                </button>
+            </div>
+
+            <div class="divider">or</div>
+
+            <form id="emailSignupForm" style="display: none;">
+                <div class="form-group">
+                    <label for="signupUserType">I am a...</label>
+                    <select id="signupUserType" required>
+                        <option value="">Select your role</option>
+                        <option value="creator">Creator (Influencer/Content Creator)</option>
+                        <option value="brand">Brand (Company/Business)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="signupName">Full Name</label>
+                    <input type="text" id="signupName" required placeholder="Your name">
+                </div>
+                <div class="form-group">
+                    <label for="signupEmail">Email Address</label>
+                    <input type="email" id="signupEmail" required placeholder="your@email.com">
+                </div>
+                <div class="form-group">
+                    <label for="signupPassword">Password</label>
+                    <input type="password" id="signupPassword" required placeholder="••••••••">
+                </div>
+                <div class="form-group full">
+                    <label>
+                        <input type="checkbox" required> I agree to the Terms of Service and Privacy Policy
+                    </label>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Create Account</button>
+            </form>
+
+            <div class="signup-link">
+                Already have an account? <a href="#" onclick="switchToLogin()">Login here</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Modal Functions
+        function openLoginModal() {
+            document.getElementById('loginModal').style.display = 'block';
+            document.getElementById('emailLoginForm').style.display = 'none';
+        }
+
+        function closeLoginModal() {
+            document.getElementById('loginModal').style.display = 'none';
+        }
+
+        function openSignupModal() {
+            document.getElementById('signupModal').style.display = 'block';
+            document.getElementById('emailSignupForm').style.display = 'none';
+        }
+
+        function closeSignupModal() {
+            document.getElementById('signupModal').style.display = 'none';
+        }
+
+        function switchToSignup() {
+            closeLoginModal();
+            openSignupModal();
+        }
+
+        function switchToLogin() {
+            closeSignupModal();
+            openLoginModal();
+        }
+
+        // Email/Password Forms
+        function handleEmailLogin() {
+            document.getElementById('emailLoginForm').style.display = 'block';
+        }
+
+        function handleEmailSignup() {
+            document.getElementById('emailSignupForm').style.display = 'block';
+        }
+
+        // OAuth Handlers
+        function handleGoogleLogin() {
+            alert('Google Login - Coming Soon!\n\nThis will redirect to Google OAuth authentication.');
+        }
+
+        function handleGoogleSignup() {
+            alert('Google Sign Up - Coming Soon!\n\nThis will redirect to Google OAuth authentication.');
+        }
+
+        // Form Submissions
+        document.getElementById('emailLoginForm')?.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = document.getElementById('loginEmail').value;
+            alert(`Login attempt for: ${email}\n\nBackend integration coming soon!`);
+        });
+
+        document.getElementById('emailSignupForm')?.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const userType = document.getElementById('signupUserType').value;
+            const name = document.getElementById('signupName').value;
+            const email = document.getElementById('signupEmail').value;
+            alert(`Sign up as ${userType}:\nName: ${name}\nEmail: ${email}\n\nBackend integration coming soon!`);
+        });
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const loginModal = document.getElementById('loginModal');
+            const signupModal = document.getElementById('signupModal');
+            if (event.target == loginModal) {
+                loginModal.style.display = 'none';
+            }
+            if (event.target == signupModal) {
+                signupModal.style.display = 'none';
+            }
+        }
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                const href = this.getAttribute('href');
+                if (href !== '#' && !href.includes('onclick')) {
+                    e.preventDefault();
+                    const target = document.querySelector(href);
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth' });
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
